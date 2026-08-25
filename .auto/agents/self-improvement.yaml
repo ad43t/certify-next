@@ -1,0 +1,8 @@
+annotations:
+  auto.sh/onboarding-install-run-id: onbrun_6ade6173-d40e-4f47-aa54-d442152301b7
+imports:
+  - "@auto/agents@latest/self-improvement.yaml"
+  - ../fragments/environments/agent-runtime.yaml
+variables:
+  repoFullName: ad43t/certify-next
+  githubConnection: github-ad43t

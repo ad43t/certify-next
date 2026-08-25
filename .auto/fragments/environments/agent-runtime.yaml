@@ -1,0 +1,18 @@
+# Auto detected repository manifests and suggested this shared runtime.
+# Review and edit these commands before merging if the repository has custom setup needs.
+environment:
+  name: agent-runtime
+  image:
+    kind: preset
+    name: node24
+  setup:
+    - name: node-dependencies
+      commands:
+        - npm ci
+      cache:
+        files:
+          - package-lock.json
+        paths:
+          - /home/user/.npm
+  setupCache:
+    ttl: 24h
