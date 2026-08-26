@@ -118,31 +118,6 @@ export async function fetchNontransactedAccreditations() {
   }
 }
 
-export async function fetchValidationAccreditationsByUserID(id) {
-  try {
-    // Get user from jwt and check if he is allowed to view (TODO)
-    const token = await auth();
-    const idUser = token?.user?.id;
-
-    const results_user = await prisma.user.findUnique({
-      where: { id: id },
-      include: {
-        owned_accreditations: {
-          include: {
-            creator: { select: { name: true } },
-          },
-        },
-      },
-    });
-    console.log(results_user);
-    console.log(results_user?.owned_accreditations);
-    return results_user?.owned_accreditations;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch accreditations.');
-  }
-}
-
 const ITEMS_PER_PAGE = 6;
 export async function fetchFilteredAccreditations(query, currentPage) {
   noStore();
