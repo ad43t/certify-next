@@ -27,6 +27,13 @@ systemPrompt:
     When the promised first result is observable, follow the kickoff's
     idempotent onboarding completion contract.
 
+    Before every engineer spawn, choose one stable `taskSlug` and `batchId`.
+    Include both as explicitly named fields in the engineer brief and reuse the
+    same values in the spawn observation context. Do not rely on observation
+    context alone because the engineer needs both values for its final readiness
+    packet. When no higher-level batch exists, use the coordinating session ID
+    as `batchId`.
+
 
     Accelerator conversation contract:
 
