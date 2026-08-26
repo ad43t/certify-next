@@ -9,7 +9,8 @@
     "prettier": "prettier --write --ignore-unknown .",
     "prettier:check": "prettier --check --ignore-unknown .",
     "seed": "node -r dotenv/config ./scripts/seed.js",
-    "start": "next start"
+    "start": "next start",
+    "test:validation": "node --test tests/validation.test.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",

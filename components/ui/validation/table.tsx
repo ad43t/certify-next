@@ -1,52 +1,29 @@
-import { ViewAccreditation } from '@/components/ui/accreditations/buttons';
+import { ViewValidationAccreditation } from '@/components/ui/validation/buttons';
+
+export type ValidationAccreditation = {
+  id: string;
+  name: string;
+  description: string | null;
+  valid_on: Date | string | null;
+  valid_until: Date | string | null;
+  type: string;
+  creator: {
+    name: string;
+  };
+};
 
 export default async function ValidationTable({
   accreditations,
+  userId,
 }: {
-  accreditations: any;
+  accreditations: ValidationAccreditation[];
+  userId: string;
 }) {
   return (
     <div className="mt-6 flow-root">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-          {/* <div className="md:hidden">
-            {accreditations?.map((accreditation) => (
-              <div
-                key={accreditation.id}
-                className="mb-2 w-full rounded-md bg-white p-4"
-              >
-                <div className="flex items-center justify-between border-b pb-4">
-                  <div>
-                    <div className="mb-2 flex items-center">
-                      <Image
-                        src={accreditation.image_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${accreditation.name}'s profile picture`}
-                      />
-                      <p>{accreditation.name}</p>
-                    </div>
-                    <p className="text-sm text-gray-500">{accreditation.email}</p>
-                  </div>
-                  <LastTransactionStatus status={accreditation.status} />
-                </div>
-                <div className="flex w-full items-center justify-between pt-4">
-                  <div>
-                    <p className="text-xl font-medium">
-                      {formatCurrency(invoice.amount)}
-                    </p>
-                    <p>{formatDateToLocal(invoice.date)}</p>
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    <UpdateAccreditation id={invoice.id} />
-                    <DeleteAccreditation id={invoice.id} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div> */}
-          <table className="hidden min-w-full text-gray-900 md:table">
+        <div className="overflow-x-auto rounded-lg bg-gray-50 p-2 md:pt-0">
+          <table className="min-w-full text-gray-900">
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
@@ -76,7 +53,7 @@ export default async function ValidationTable({
               </tr>
             </thead>
             <tbody className="bg-white">
-              {accreditations?.map((accreditation) => (
+              {accreditations.map((accreditation) => (
                 <tr
                   key={accreditation.id}
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
@@ -89,14 +66,16 @@ export default async function ValidationTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <p>
-                      {accreditation.valid_from &&
-                        new Date(accreditation.valid_from).toDateString()}
+                      {accreditation.valid_on
+                        ? new Date(accreditation.valid_on).toDateString()
+                        : 'Not specified'}
                     </p>
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <p>
-                      {accreditation.valid_until &&
-                        new Date(accreditation.valid_until).toDateString()}
+                      {accreditation.valid_until
+                        ? new Date(accreditation.valid_until).toDateString()
+                        : 'No expiry'}
                     </p>
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
@@ -107,7 +86,10 @@ export default async function ValidationTable({
                     {accreditation.creator.name}
                   </td>
                   <td className="flex justify-between whitespace-nowrap py-3 pl-6 pr-3">
-                    <ViewAccreditation id={accreditation.id} />
+                    <ViewValidationAccreditation
+                      userId={userId}
+                      accreditationId={accreditation.id}
+                    />
                   </td>
                 </tr>
               ))}
